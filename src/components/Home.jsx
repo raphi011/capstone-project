@@ -4,6 +4,8 @@ import Box from 'grommet/components/Box';
 import Header from 'grommet/components/Header';
 import Title from 'grommet/components/Title';
 
+import NewTournamentForm from '../containers/NewTournamentFormContainer';
+
 class Home extends Component {
   render() {
     return (
@@ -11,6 +13,7 @@ class Home extends Component {
         <Header>
           <Title>Home</Title>
         </Header>
+        <NewTournamentForm />
       </Box>
     );
   }

@@ -7,7 +7,7 @@ import Box from 'grommet/components/Box';
 import Header from './Header';
 
 const App = ({ children }) => (
-  <Container centered={false}>
+  <Container>
     <Box>
       <Header />
       {children}
