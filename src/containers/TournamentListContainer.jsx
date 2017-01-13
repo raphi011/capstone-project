@@ -1,18 +1,34 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { browserHistory } from 'react-router';
+import { connect } from 'react-redux';
+
 import TournamentList from '../components/TournamentList';
 
-class TournamentListContainer extends Component {
-  constructor(props) {
-    super(props);
+import { getAllTournaments } from '../reducers/tournament';
 
-    this.state = {
-    };
+
+class TournamentListContainer extends Component {
+  static onSelectTournament(tournament) {
+    browserHistory.push(`/tournaments/${tournament.id}`);
   }
 
   render() {
-    return (<TournamentList />
+    return (
+      <TournamentList
+        onSelect={TournamentListContainer.onSelectTournament}
+        tournaments={this.props.tournaments}
+        />
     );
   }
 }
 
-export default TournamentListContainer;
+TournamentListContainer.propTypes = {
+  tournaments: PropTypes.array,
+  onSelect: PropTypes.func,
+};
+
+const mapStateToProps = state => ({
+  tournaments: getAllTournaments(state),
+});
+
+export default connect(mapStateToProps)(TournamentListContainer);

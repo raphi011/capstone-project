@@ -1,13 +1,12 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
-// import issues from './issues';
-// import branches from './branches';
-// import customers from './customers';
+import notification from './notification';
+import { tournamentsByIdReducer, tournamentsReducer } from './tournament';
 
 export default combineReducers({
-  // issues,
-  // customers,
-  // branches,
+  tournaments: tournamentsReducer,
+  tournamentsById: tournamentsByIdReducer,
+  notification,
   routing: routerReducer,
 });

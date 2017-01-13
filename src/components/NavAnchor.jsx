@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Anchor from 'grommet/components/Anchor';
 
+
 // https://github.com/grommet/grommet/issues/576
 export default class NavAnchor extends Component {
   static defaultProps = {
@@ -23,7 +24,7 @@ export default class NavAnchor extends Component {
   }
 
   render() {
-    const { path, activeOnIndexOnly } = this.props;
+    const { path, activeOnIndexOnly, ...rest } = this.props;
     const { router } = this.context;
     let className = this.props.className || '';
     if (router.isActive(path, activeOnIndexOnly)) {
@@ -32,7 +33,7 @@ export default class NavAnchor extends Component {
     const href = router.createPath(path);
     return (
       <Anchor
-        {...this.props}
+        {...rest}
         className={className}
         href={href}
         onClick={this.onClick}

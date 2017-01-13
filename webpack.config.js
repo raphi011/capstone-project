@@ -13,7 +13,7 @@ const config = {
     path: resolve(__dirname, 'dist'),
     publicPath: '/',
   },
-  resolve: { extensions: ['.js', '.jsx'] },
+  resolve: { extensions: ['.js', '.jsx', '.json'] },
   performance: { hints: false },
   context: resolve(__dirname, 'src'),
 
