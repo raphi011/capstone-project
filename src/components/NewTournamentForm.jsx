@@ -101,7 +101,7 @@ NewTournamentForm.propTypes = {
   type: PropTypes.string,
   league: PropTypes.object,
   club: propTypes.club,
-  clubs: PropTypes.array(propTypes.club),
+  clubs: PropTypes.arrayOf(propTypes.club),
   name: PropTypes.string,
   date: PropTypes.string,
   dateError: PropTypes.string,

@@ -3,6 +3,8 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 
 import NewTournamentForm from '../components/NewTournamentForm';
+import * as propTypes from '../propTypes';
+import { getAllClubs } from '../reducers/club';
 
 import { createTournament } from '../actions/tournament';
 
@@ -34,9 +36,9 @@ class NewTournamentFormContainer extends Component {
     this.onDescriptionChange = this.onDescriptionChange.bind(this);
   }
 
-  onClubChange(club) {
+  onClubChange({ option }) {
     const tournament = this.state.tournament;
-    tournament.club = club;
+    tournament.club = option;
 
     this.setState({ tournament });
   }
@@ -111,6 +113,7 @@ class NewTournamentFormContainer extends Component {
   render() {
     const { club, type, league, date, size, name } = this.state.tournament;
     const { dateError, clubError } = this.state.errors;
+    const { clubs } = this.props;
 
     const onSubmit = this.canSubmit() ? this.onSubmit : null;
 
@@ -125,6 +128,7 @@ class NewTournamentFormContainer extends Component {
       onDescriptionChange={this.onDescriptionChange}
       type={type}
       club={club}
+      clubs={clubs}
       name={name}
       league={league}
       date={date}
@@ -138,7 +142,10 @@ class NewTournamentFormContainer extends Component {
 
 NewTournamentFormContainer.propTypes = {
   onSubmit: PropTypes.func,
+  clubs: PropTypes.arrayOf(propTypes.club),
   createTournament: PropTypes.func.isRequired,
 };
 
-export default connect(null, { createTournament })(NewTournamentFormContainer);
+const mapStateToProps = state => ({ clubs: getAllClubs(state).map(c => ({ ...c, value: c.normalizedName, label: c.name })) });
+
+export default connect(mapStateToProps, { createTournament })(NewTournamentFormContainer);
