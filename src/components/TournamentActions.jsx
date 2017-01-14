@@ -1,25 +1,20 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import Menu from 'grommet/components/Menu';
-import Button from 'grommet/components/Button';
+import Anchor from 'grommet/components/Anchor';
 
-const TournamentActions = () => (
-  <Menu label="Actions" inline responsive>
-    <Button
-      label="Label"
-      href="#"
-      />
-    <Button
-      label="Label"
-      href="#"
-      />
-    <Button
-      label="Label"
-      href="#"
+const TournamentActions = ({ onSignup }) => (
+  <Menu direction="row" responsive>
+    <Anchor
+      label="Sign up"
+      onClick={onSignup}
       />
   </Menu>
-
 );
+
+TournamentActions.propTypes = {
+  onSignup: PropTypes.func,
+};
 
 export default TournamentActions;
 

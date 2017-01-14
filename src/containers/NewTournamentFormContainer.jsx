@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
+import { connect } from 'react-redux';
 
 import NewTournamentForm from '../components/NewTournamentForm';
 
+import { createTournament } from '../actions/tournament';
 
 class NewTournamentFormContainer extends Component {
   constructor(props) {
@@ -14,9 +16,11 @@ class NewTournamentFormContainer extends Component {
         size: 16,
         type: 'M',
         league: { value: 'A', label: 'A-Cup' },
+        description: '',
       },
       errors: {
         dateError: '',
+        clubError: '',
       },
     };
 
@@ -26,6 +30,22 @@ class NewTournamentFormContainer extends Component {
     this.onTypeChange = this.onTypeChange.bind(this);
     this.onLeagueChange = this.onLeagueChange.bind(this);
     this.onNameChange = this.onNameChange.bind(this);
+    this.onClubChange = this.onClubChange.bind(this);
+    this.onDescriptionChange = this.onDescriptionChange.bind(this);
+  }
+
+  onClubChange(club) {
+    const tournament = this.state.tournament;
+    tournament.club = club;
+
+    this.setState({ tournament });
+  }
+
+  onDescriptionChange(description) {
+    const tournament = this.state.tournament;
+    tournament.description = description;
+
+    this.setState({ tournament });
   }
 
   onNameChange(name) {
@@ -73,16 +93,24 @@ class NewTournamentFormContainer extends Component {
   onSubmit(e) {
     e.preventDefault();
 
+    const tournament = this.state.tournament;
+    tournament.league = tournament.league.value;
+
+    this.props.createTournament(tournament);
+
     if (this.props.onSubmit) this.props.onSubmit(this.state.tournament);
   }
 
   canSubmit() {
-    return !this.state.errors.dateError;
+    const { dateError } = this.state.errors;
+    const { club } = this.state.tournament;
+
+    return !dateError && club;
   }
 
   render() {
-    const { type, league, date, size, name } = this.state.tournament;
-    const { dateError } = this.state.errors;
+    const { club, type, league, date, size, name } = this.state.tournament;
+    const { dateError, clubError } = this.state.errors;
 
     const onSubmit = this.canSubmit() ? this.onSubmit : null;
 
@@ -93,11 +121,15 @@ class NewTournamentFormContainer extends Component {
       onSizeChange={this.onSizeChange}
       onLeagueChange={this.onLeagueChange}
       onTypeChange={this.onTypeChange}
+      onClubChange={this.onClubChange}
+      onDescriptionChange={this.onDescriptionChange}
       type={type}
+      club={club}
       name={name}
       league={league}
       date={date}
       dateError={dateError}
+      clubError={clubError}
       size={size}
       />
     );
@@ -106,6 +138,7 @@ class NewTournamentFormContainer extends Component {
 
 NewTournamentFormContainer.propTypes = {
   onSubmit: PropTypes.func,
+  createTournament: PropTypes.func.isRequired,
 };
 
-export default NewTournamentFormContainer;
+export default connect(null, { createTournament })(NewTournamentFormContainer);

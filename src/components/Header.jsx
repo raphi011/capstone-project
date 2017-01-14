@@ -10,28 +10,18 @@ import Actions from 'grommet/components/icons/base/Actions';
 import NavAnchor from './NavAnchor';
 
 const Header = () => (
-  <HeaderBar colorIndex="neutral-1" pad="small">
-    <Title>
-      Beach
-  </Title>
-    <Box
-      flex
-      justify="end"
+  <HeaderBar colorIndex="neutral-1" pad="small" justify="between" fixed={false} >
+    <Title>Beach</Title>
+    <Menu
       direction="row"
-      responsive={false}
+      dropAlign={{ right: 'right' }}
+      inline
       >
-      <Menu
-        inline
-        direction="row"
-        icon={<Actions />}
-        dropAlign={{ right: 'right' }}
-        >
-        <NavAnchor path="/" activeOnIndexOnly>Home</NavAnchor>
-        <NavAnchor path="/users">Users</NavAnchor>
-        <NavAnchor path="/clubs">Clubs</NavAnchor>
-        <NavAnchor path="/tournaments">Tournaments</NavAnchor>
-      </Menu>
-    </Box>
+      <NavAnchor path="/" activeOnIndexOnly>Home</NavAnchor>
+      <NavAnchor path="/users">Users</NavAnchor>
+      <NavAnchor path="/clubs">Clubs</NavAnchor>
+      <NavAnchor path="/tournaments">Tournaments</NavAnchor>
+    </Menu>
   </HeaderBar>
 );
 

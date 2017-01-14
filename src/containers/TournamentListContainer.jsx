@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import TournamentList from '../components/TournamentList';
 
-import { getAllTournaments } from '../reducers/tournament';
+import { getAllTournaments, getNearTournaments } from '../reducers/tournament';
 
 
 class TournamentListContainer extends Component {
@@ -17,6 +17,7 @@ class TournamentListContainer extends Component {
       <TournamentList
         onSelect={TournamentListContainer.onSelectTournament}
         tournaments={this.props.tournaments}
+        addHeaders={this.props.addHeaders}
         />
     );
   }
@@ -25,10 +26,15 @@ class TournamentListContainer extends Component {
 TournamentListContainer.propTypes = {
   tournaments: PropTypes.array,
   onSelect: PropTypes.func,
+  addHeaders: PropTypes.bool,
 };
 
-const mapStateToProps = state => ({
-  tournaments: getAllTournaments(state),
-});
+const mapStateToProps = (state, ownProps) => {
+  const { position } = ownProps;
+
+  const tournaments = position ? getNearTournaments(state, position) : getAllTournaments(state);
+
+  return ({ tournaments });
+};
 
 export default connect(mapStateToProps)(TournamentListContainer);

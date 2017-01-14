@@ -1,12 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 
+import Menu from 'grommet/components/Menu';
 import Box from 'grommet/components/Box';
 import Header from 'grommet/components/Header';
 import Title from 'grommet/components/Title';
 import Button from 'grommet/components/Button';
 import Add from 'grommet/components/icons/base/AddCircle';
 import Layer from 'grommet/components/Layer';
+import CheckBox from 'grommet/components/CheckBox';
 
 import TournamentList from '../containers/TournamentListContainer';
 import NewTournamentForm from '../containers/NewTournamentFormContainer';
@@ -17,17 +20,30 @@ class Tournaments extends Component {
   constructor(props) {
     super(props);
 
+    const showNearMe = navigator.geolocation !== undefined;
+
     this.state = {
       showNewTournament: false,
+      showNearMe,
+      nearMe: false,
+      position: null,
     };
 
     this.showNewTournamentModal = this.showNewTournamentModal.bind(this);
     this.closeNewTournamentModal = this.closeNewTournamentModal.bind(this);
     this.onNewTournament = this.onNewTournament.bind(this);
+    this.showPosition = this.showPosition.bind(this);
+    this.onNearMeChange = this.onNearMeChange.bind(this);
+  }
+
+  showPosition(position) {
+    this.setState({ position: position.coords });
   }
 
   onNewTournament(tournament) {
     this.props.showNotification('ok', 'Successfully created new tournament');
+
+    browserHistory.push('/tournaments/1');
 
     this.closeNewTournamentModal();
   }
@@ -40,8 +56,22 @@ class Tournaments extends Component {
     this.setState({ showNewTournament: true });
   }
 
+  onNearMeChange() {
+    const nearMe = !this.state.nearMe;
+    let position = this.state.position;
+
+    if (nearMe) {
+      navigator.geolocation.getCurrentPosition(this.showPosition);
+    } else {
+      position = null;
+    }
+
+    this.setState({ nearMe, position });
+  }
+
   render() {
     let newTournamentModal;
+    let nearMeToggle;
 
     if (this.state.showNewTournament) {
       newTournamentModal = (
@@ -53,19 +83,36 @@ class Tournaments extends Component {
       );
     }
 
+    if (this.state.showNearMe) {
+      nearMeToggle = (
+        <CheckBox
+          label="Near Me"
+          value={this.nearMe}
+          onChange={this.onNearMeChange}
+          reverse
+          toggle
+          />
+      );
+    }
+
     return (
       <Box pad="medium" full>
-        <Header justify="between">
+        <Header justify="between" responsive >
           <Title>Tournaments</Title>
-          <Button
-            icon={<Add />}
-            label="Create"
-            href="#"
-            onClick={this.showNewTournamentModal}
-            />
+          <div>
+            {nearMeToggle}
+            <Button
+              icon={<Add />}
+              label="Create"
+              href="#"
+              onClick={this.showNewTournamentModal}
+              />
+          </div>
         </Header>
-        <TournamentList onSelect={this.onSelectTournament} />
+        <div style={{ marginTop: '10px' }}>
+        <TournamentList position={this.state.position} onSelect={this.onSelectTournament} addHeaders />
         {newTournamentModal}
+        </div>
       </Box >
     );
   }

@@ -20,7 +20,7 @@ const App = ({ children, notification, closeNotificationBar }) => {
 
   return (
     <Container centered={false}>
-      <Box colorIndex="light-2">
+      <Box colorIndex="light-2" full>
         <Header />
         {notificationBar}
         {children}

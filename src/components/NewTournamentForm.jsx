@@ -12,9 +12,12 @@ import Heading from 'grommet/components/Heading';
 import Select from 'grommet/components/Select';
 import RadioButton from 'grommet/components/RadioButton';
 
+import * as propTypes from '../propTypes';
+
 const NewTournamentForm = (
-  { onSubmit, onDateChange, onSizeChange, onLeagueChange, onTypeChange, onNameChange,
-    league, type, date, dateError, size, name }) => (
+  { onSubmit, onDateChange, onSizeChange, onLeagueChange, onTypeChange, onNameChange, onDescriptionChange,
+    onClubChange,
+    league, type, date, dateError, size, name, club, clubs }) => (
     <Form>
       <Header>
         <Heading>
@@ -25,8 +28,15 @@ const NewTournamentForm = (
         <FormField label="Name">
           <TextInput
             value={name}
-            placeHolder="e.g. 'BeachBattle'"
+            placeHolder="e.g. 'BeachBattle' (optional)"
             onDOMChange={e => onNameChange(e.target.value)}
+            />
+        </FormField>
+        <FormField label="Club">
+          <Select
+            options={clubs}
+            value={club}
+            onChange={onClubChange}
             />
         </FormField>
         <FormField label="League">
@@ -65,7 +75,7 @@ const NewTournamentForm = (
             />
         </FormField>
         <FormField label="Description" >
-          <textarea rows="5" placeholder="Additional Description for the tournament" />
+          <textarea rows="5" onChange={e => onDescriptionChange(e.target.value)} placeholder="Additional Description for the tournament" />
         </FormField>
       </FormFields>
       <Footer pad={{ vertical: 'medium' }}>
@@ -86,8 +96,12 @@ NewTournamentForm.propTypes = {
   onLeagueChange: PropTypes.func,
   onTypeChange: PropTypes.func,
   onNameChange: PropTypes.func,
+  onClubChange: PropTypes.func,
+  onDescriptionChange: PropTypes.func,
   type: PropTypes.string,
   league: PropTypes.object,
+  club: propTypes.club,
+  clubs: PropTypes.array(propTypes.club),
   name: PropTypes.string,
   date: PropTypes.string,
   dateError: PropTypes.string,

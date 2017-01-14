@@ -33,6 +33,7 @@
   "dependencies": {
     "grommet": "^1.1.0",
     "grommet-addons": "^0.1.0",
+    "haversine": "^1.0.2",
     "isomorphic-fetch": "^2.2.1",
     "moment": "^2.17.1",
     "react": "^15.3.0",
