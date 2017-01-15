@@ -11,6 +11,12 @@ export const createTournament = tournament => {
   });
 };
 
+export const addTeam = (id, team) => ({
+  type: 'ADD_TEAM',
+  id,
+  team,
+});
+
 export const deleteTournament = id => ({
   type: 'DELETE_TOURNAMENT',
   id,

@@ -9,9 +9,11 @@ import FormField from 'grommet/components/FormField';
 import FormFields from 'grommet/components/FormFields';
 import Select from 'grommet/components/Select';
 
+import * as propTypes from '../propTypes';
+
 const TournamentSignupForm = ({
   onSearchPlayer1, onSearchPlayer2, onSubmit, onSetPlayer1, onSetPlayer2,
-  players, player1, player2 }) => {
+  player1, player2, players1, players2 }) => {
   return (
     <Form>
       <Header>
@@ -24,7 +26,7 @@ const TournamentSignupForm = ({
             value={player1}
             onChange={({ option }) => onSetPlayer1(option)}
             onSearch={onSearchPlayer1}
-            options={['Player 1', 'Player 2']}
+            options={players1}
             />
         </FormField>
         <FormField label="Player 2">
@@ -33,7 +35,7 @@ const TournamentSignupForm = ({
             value={player2}
             onChange={({ option }) => onSetPlayer2(option)}
             onSearch={onSearchPlayer2}
-            options={['Player 1', 'Player 2']}
+            options={players2}
             />
         </FormField>
       </FormFields>
@@ -50,7 +52,10 @@ TournamentSignupForm.propTypes = {
   onSearchPlayer1: PropTypes.func,
   onSearchPlayer2: PropTypes.func,
   onSubmit: PropTypes.func,
-  players: PropTypes.func,
+  player1: propTypes.player,
+  player2: propTypes.player,
+  players1: PropTypes.arrayOf(propTypes.player),
+  players2: PropTypes.arrayOf(propTypes.player),
 };
 
 export default TournamentSignupForm;

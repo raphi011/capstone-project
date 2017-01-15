@@ -3,6 +3,7 @@ import moment from 'moment';
 
 import List from 'grommet/components/List';
 import ListItem from 'grommet/components/ListItem';
+import ListPlaceholder from 'grommet-addons/components/ListPlaceholder';
 
 import TournamentListItem from './TournamentListItem';
 import * as propTypes from '../propTypes';
@@ -12,18 +13,23 @@ const TournamentList = ({ onSelect, tournaments, addHeaders }) => {
   let lastMonth = '';
 
   let index = 0;
-  tournaments.forEach((t) => {
-    if (addHeaders) {
-      const dateMoment = moment(t.date);
-      const date = dateMoment.format('YYYYMM');
-      if (date !== lastMonth) {
-        items.push(<ListItem key={index++}>{dateMoment.format('YYYY MMMM')}</ListItem>);
-        lastMonth = date;
-      }
-    }
 
-    items.push(<TournamentListItem key={index++} {...t} registrations={t.teams.length} onSelect={() => onSelect(t)} />);
-  });
+  if (tournaments.length) {
+    tournaments.forEach((t) => {
+      if (addHeaders) {
+        const dateMoment = moment(t.date);
+        const date = dateMoment.format('YYYYMM');
+        if (date !== lastMonth) {
+          items.push(<ListItem key={index++}>{dateMoment.format('YYYY MMMM')}</ListItem>);
+          lastMonth = date;
+        }
+      }
+
+      items.push(<TournamentListItem key={index++} {...t} registrations={t.teams.length} onSelect={() => onSelect(t)} />);
+    });
+  } else {
+    items.push(<ListPlaceholder emptyMessage="None found" unfilteredTotal={0} filteredTotal={0} />);
+  }
 
   return (
     <List selectable>

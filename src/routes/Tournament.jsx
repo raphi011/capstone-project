@@ -52,7 +52,7 @@ class Tournament extends Component {
       newTeamModal = (
         <Layer onClose={this.closeSignup} closer>
           <Box pad={{ vertical: 'small' }}>
-            <TournamentSignupForm />
+            <TournamentSignupForm tournamentId={tournament.id} onSubmit={this.closeSignup} />
           </Box>
         </Layer>
       );
@@ -82,7 +82,7 @@ class Tournament extends Component {
           </Box>
           <Box colorIndex="light-1" style={{ flex: 1, margin: '10px 10px 0 10px', boxShadow: '0 1px 4px 0 rgba(0,0,0,0.14)' }} >
             <Heading tag="h2" align="center">Teams</Heading>
-            <TeamList />
+            <TeamList teams={tournament.teams} />
           </Box>
         </Box>
         {newTeamModal}

@@ -5,10 +5,10 @@ import { players } from './player';
 const tournamentsById = [1, 2, 3, 4, 5, 6];
 
 const teams = {
-  1: { player1: players[1], player2: players[2] },
-  2: { player1: players[3], player2: players[4] },
-  3: { player1: players[5], player2: players[6] },
-  4: { player1: players[7], player2: players[8] },
+  1: { player1: players[1], player2: players[2], points: 200 },
+  2: { player1: players[3], player2: players[4], points: 422 },
+  3: { player1: players[5], player2: players[6], points: 155 },
+  4: { player1: players[7], player2: players[8], points: 83 },
 };
 
 const tournaments = {
@@ -25,9 +25,7 @@ export const tournamentsByIdReducer = (state = tournamentsById, action) => {
 
   switch (action.type) {
     case 'CREATE_TOURNAMENT':
-      console.log('creating new tournament');
       newState.push(action.id);
-
       return newState;
     case 'DELETE_TOURNAMENT':
     default:
@@ -46,6 +44,11 @@ export const tournamentsReducer = (state = tournaments, action) => {
           ...action.tournament,
         },
       };
+    case 'ADD_TEAM':
+      newState = { ...state };
+      newState[action.id].teams = state[action.id].teams.concat(action.team);
+
+      return newState;
     case 'DELETE_TOURNAMENT':
       newState = { ...state };
       delete newState[action.id];

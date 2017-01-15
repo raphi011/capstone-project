@@ -13,7 +13,13 @@ const TeamList = ({ teams, tournamentFinished, ...props }) => {
 
   return (
     <List {...props}>
-      {teams.map((t, i) => <TeamListItem key={i} team={t} tournamentFinished={tournamentFinished} />)}
+      {teams.map((t, i) => {
+        t.nr = i + 1;
+
+        return (
+          <TeamListItem key={i} team={t} tournamentFinished={tournamentFinished} />
+        );
+      })}
     </List>
   );
 };

@@ -1,6 +1,7 @@
 const { resolve } = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 const prod = process.argv.indexOf('-p') !== -1;
 
@@ -36,6 +37,9 @@ const config = {
   plugins: [
     new ExtractTextPlugin('main.css'),
     new webpack.NamedModulesPlugin(),
+    new ServiceWorkerWebpackPlugin({
+      entry: resolve(__dirname, 'src/sw.js'),
+    }),
   ],
 };
 

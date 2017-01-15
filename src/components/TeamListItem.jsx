@@ -14,9 +14,9 @@ const TeamListItem = ({ team, tournamentFinished }) => {
       <ListItem justify="between">
         <span>
           <span>{team.nr}. </span>
-          <Link to="#">{team.player1}</Link>
+          <Link to="#">{team.player1.name}</Link>
           <span> / </span>
-          <Link to="#">{team.player2}</Link>
+          <Link to="#">{team.player2.name}</Link>
         </span>
         <span title="Total Points" className="secondary">{team.points} P.</span>
       </ListItem>

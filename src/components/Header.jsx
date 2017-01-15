@@ -17,9 +17,9 @@ const Header = () => (
       dropAlign={{ right: 'right' }}
       inline
       >
-      <NavAnchor path="/" activeOnIndexOnly>Home</NavAnchor>
+      {/* <NavAnchor path="/" activeOnIndexOnly>Home</NavAnchor>
       <NavAnchor path="/users">Users</NavAnchor>
-      <NavAnchor path="/clubs">Clubs</NavAnchor>
+      <NavAnchor path="/clubs">Clubs</NavAnchor> */}
       <NavAnchor path="/tournaments">Tournaments</NavAnchor>
     </Menu>
   </HeaderBar>
