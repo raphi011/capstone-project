@@ -25,8 +25,9 @@ const NewTournamentForm = (
     </Heading>
       </Header>
       <FormFields>
-        <FormField label="Name">
+        <FormField label="Name" htmlFor="tournament-name">
           <TextInput
+            id="tournament-name"
             value={name}
             placeHolder="e.g. 'BeachBattle' (optional)"
             onDOMChange={e => onNameChange(e.target.value)}
@@ -46,17 +47,18 @@ const NewTournamentForm = (
             onChange={onLeagueChange}
             />
         </FormField>
-        <FormField label="Date" error={dateError}>
+        <FormField label="Date" error={dateError} htmlFor="tournament-date">
           <DateTime
-            id="id"
+            id="tournament-date"
             format="YYYY-MM-DD HH:mm"
             name="name"
             onChange={onDateChange}
             value={date}
             />
         </FormField>
-        <FormField label="Players">
+        <FormField label="Players" htmlFor="tournament-size">
           <Select
+            id="tournament-size"
             options={['8', '16', '32', '64']}
             value={size}
             onChange={onSizeChange}
@@ -76,8 +78,8 @@ const NewTournamentForm = (
             onChange={() => onTypeChange('F')}
             />
         </FormField>
-        <FormField label="Description" >
-          <textarea rows="5" onChange={e => onDescriptionChange(e.target.value)} placeholder="Additional Description for the tournament" />
+        <FormField label="Description" htmlFor="tournament-description" >
+          <textarea id="tournament-description" rows="5" onChange={e => onDescriptionChange(e.target.value)} placeholder="Additional Description for the tournament" />
         </FormField>
       </FormFields>
       <Footer pad={{ vertical: 'medium' }}>

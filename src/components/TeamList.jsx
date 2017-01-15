@@ -8,7 +8,7 @@ import * as propTypes from '../propTypes';
 
 const TeamList = ({ teams, tournamentFinished, ...props }) => {
   if (!teams || !teams.length) {
-    return <List><ListPlaceholder emptyMessage="None" unfilteredTotal={0} filteredTotal={0} /></List>;
+    return <ListPlaceholder emptyMessage="None" unfilteredTotal={0} filteredTotal={0} />;
   }
 
   return (

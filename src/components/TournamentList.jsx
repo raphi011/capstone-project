@@ -14,22 +14,23 @@ const TournamentList = ({ onSelect, tournaments, addHeaders }) => {
 
   let index = 0;
 
-  if (tournaments.length) {
-    tournaments.forEach((t) => {
-      if (addHeaders) {
-        const dateMoment = moment(t.date);
-        const date = dateMoment.format('YYYYMM');
-        if (date !== lastMonth) {
-          items.push(<ListItem key={index++}>{dateMoment.format('YYYY MMMM')}</ListItem>);
-          lastMonth = date;
-        }
-      }
-
-      items.push(<TournamentListItem key={index++} {...t} registrations={t.teams.length} onSelect={() => onSelect(t)} />);
-    });
-  } else {
-    items.push(<ListPlaceholder emptyMessage="None found" unfilteredTotal={0} filteredTotal={0} />);
+  if (!tournaments.length) {
+    return <ListPlaceholder emptyMessage="None found" unfilteredTotal={0} filteredTotal={0} />;
   }
+
+  tournaments.forEach((t) => {
+    if (addHeaders) {
+      const dateMoment = moment(t.date);
+      const date = dateMoment.format('YYYYMM');
+      if (date !== lastMonth) {
+        items.push(<ListItem key={index++}>{dateMoment.format('YYYY MMMM')}</ListItem>);
+        lastMonth = date;
+      }
+    }
+
+    items.push(<TournamentListItem key={index++} {...t} registrations={t.teams.length} onSelect={() => onSelect(t)} />);
+  });
+  items.push();
 
   return (
     <List selectable>
