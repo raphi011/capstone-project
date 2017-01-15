@@ -31,21 +31,12 @@ class Tournaments extends Component {
 
     this.showNewTournamentModal = this.showNewTournamentModal.bind(this);
     this.closeNewTournamentModal = this.closeNewTournamentModal.bind(this);
-    this.onNewTournament = this.onNewTournament.bind(this);
     this.showPosition = this.showPosition.bind(this);
     this.onNearMeChange = this.onNearMeChange.bind(this);
   }
 
   showPosition(position) {
     this.setState({ position: position.coords });
-  }
-
-  onNewTournament(tournament) {
-    this.props.showNotification('ok', 'Successfully created new tournament');
-
-    browserHistory.push('/tournaments/1');
-
-    this.closeNewTournamentModal();
   }
 
   closeNewTournamentModal() {
@@ -77,7 +68,7 @@ class Tournaments extends Component {
       newTournamentModal = (
         <Layer onClose={this.closeNewTournamentModal} closer>
           <Box pad={{ vertical: 'small' }}>
-            <NewTournamentForm onSubmit={this.onNewTournament} />
+            <NewTournamentForm onSubmit={this.closeNewTournamentModal} />
           </Box>
         </Layer>
       );
@@ -89,6 +80,7 @@ class Tournaments extends Component {
           label="Near Me"
           value={this.nearMe}
           onChange={this.onNearMeChange}
+          title="Shows Tournaments in a 20KM Radius"
           reverse
           toggle
           />

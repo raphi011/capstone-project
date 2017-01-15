@@ -6,6 +6,7 @@ import NewTournamentForm from '../components/NewTournamentForm';
 import * as propTypes from '../propTypes';
 import { getAllClubs } from '../reducers/club';
 
+import { showNewNotification } from '../actions/notification';
 import { createTournament } from '../actions/tournament';
 
 class NewTournamentFormContainer extends Component {
@@ -14,8 +15,9 @@ class NewTournamentFormContainer extends Component {
 
     this.state = {
       tournament: {
-        date: moment().format('YYYY-MM-DD HH:mm'),
-        size: 16,
+        date: moment().add(1, 'days').format('YYYY-MM-DD HH:mm'),
+        name: '',
+        size: '16',
         type: 'M',
         league: { value: 'A', label: 'A-Cup' },
         description: '',
@@ -70,10 +72,14 @@ class NewTournamentFormContainer extends Component {
 
     tournament.date = value;
 
-    errors.dateError =
-      moment(value, 'YYYY-MM-DD HH:mm', true).isValid() ?
-        '' :
-        'Invalid Date Format.';
+
+    if (!moment(value, 'YYYY-MM-DD HH:mm', true).isValid()) {
+      errors.dateError = 'Invalid Date Format.';
+    } else if (moment(value).isBefore(moment())) {
+      errors.dateError = 'Can\'t create tournament in the past.';
+    } else {
+      errors.dateError = '';
+    }
 
     this.setState({ tournament, errors });
   }
@@ -95,10 +101,15 @@ class NewTournamentFormContainer extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const tournament = this.state.tournament;
+    console.log('CALLING ONSUBMIT');
+
+    const tournament = { ...this.state.tournament };
     tournament.league = tournament.league.value;
+    tournament.date = moment(tournament.date).toISOString();
+    tournament.teams = [];
 
     this.props.createTournament(tournament);
+    this.props.showNotification('ok', 'Successfully created new tournament');
 
     if (this.props.onSubmit) this.props.onSubmit(this.state.tournament);
   }
@@ -142,10 +153,14 @@ class NewTournamentFormContainer extends Component {
 
 NewTournamentFormContainer.propTypes = {
   onSubmit: PropTypes.func,
+  showNotification: PropTypes.func,
   clubs: PropTypes.arrayOf(propTypes.club),
   createTournament: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({ clubs: getAllClubs(state).map(c => ({ ...c, value: c.normalizedName, label: c.name })) });
+const mapStateToProps = state => ({
+  clubs: getAllClubs(state).map(c => ({ ...c, value: c.normalizedName, label: c.name })),
+  showNotification: showNewNotification,
+});
 
 export default connect(mapStateToProps, { createTournament })(NewTournamentFormContainer);

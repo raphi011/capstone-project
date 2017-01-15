@@ -6,6 +6,7 @@ import ListItem from 'grommet/components/ListItem';
 import Box from 'grommet/components/Box';
 
 import LeagueIcon from './LeagueIcon';
+import * as propTypes from '../propTypes';
 
 const TournamentListItem = ({ onSelect, type, league, club, registrations, date, size }) => (
   <ListItem
@@ -16,7 +17,7 @@ const TournamentListItem = ({ onSelect, type, league, club, registrations, date,
     <Box direction="row" >
       <LeagueIcon league={league} />
       <span style={{ margin: '0 10px' }}>{moment(date).format('dddd, D')} - {type}</span>
-      <Link to={`/clubs/${club}`}>{club}</Link>
+      <Link to={`/clubs/${club.normalizedName}`}>{club.name}</Link>
     </Box>
     <span className="secondary">{registrations} / {size}</span>
   </ListItem>
@@ -26,8 +27,8 @@ TournamentListItem.propTypes = {
   onSelect: PropTypes.func,
   league: PropTypes.string,
   type: PropTypes.string,
-  club: PropTypes.string,
-  size: PropTypes.number,
+  club: propTypes.club,
+  size: PropTypes.string,
   date: PropTypes.string,
   registrations: PropTypes.number,
 };

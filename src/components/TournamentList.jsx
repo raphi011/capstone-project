@@ -5,6 +5,7 @@ import List from 'grommet/components/List';
 import ListItem from 'grommet/components/ListItem';
 
 import TournamentListItem from './TournamentListItem';
+import * as propTypes from '../propTypes';
 
 const TournamentList = ({ onSelect, tournaments, addHeaders }) => {
   const items = [];
@@ -21,7 +22,7 @@ const TournamentList = ({ onSelect, tournaments, addHeaders }) => {
       }
     }
 
-    items.push(<TournamentListItem key={index++} {...t} onSelect={() => onSelect(t)} />);
+    items.push(<TournamentListItem key={index++} {...t} registrations={t.teams.length} onSelect={() => onSelect(t)} />);
   });
 
   return (
@@ -33,7 +34,7 @@ const TournamentList = ({ onSelect, tournaments, addHeaders }) => {
 
 TournamentList.propTypes = {
   onSelect: PropTypes.func,
-  tournaments: PropTypes.array,
+  tournaments: PropTypes.arrayOf(propTypes.tournament),
   addHeaders: PropTypes.bool,
 };
 

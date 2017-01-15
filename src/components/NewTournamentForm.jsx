@@ -49,7 +49,7 @@ const NewTournamentForm = (
         <FormField label="Date" error={dateError}>
           <DateTime
             id="id"
-            format="YYYY-MM-DD HH:mm:ss"
+            format="YYYY-MM-DD HH:mm"
             name="name"
             onChange={onDateChange}
             value={date}
@@ -57,7 +57,7 @@ const NewTournamentForm = (
         </FormField>
         <FormField label="Players">
           <Select
-            options={[8, 16, 32, 64]}
+            options={['8', '16', '32', '64']}
             value={size}
             onChange={onSizeChange}
             />
@@ -65,11 +65,13 @@ const NewTournamentForm = (
         <FormField label="Type">
           <RadioButton
             label="Men"
+            id="tournament-type-m"
             checked={type === 'M'}
             onChange={() => onTypeChange('M')}
             />
           <RadioButton
             label="Women"
+            id="tournament-type-f"
             checked={type === 'F'}
             onChange={() => onTypeChange('F')}
             />
@@ -105,7 +107,7 @@ NewTournamentForm.propTypes = {
   name: PropTypes.string,
   date: PropTypes.string,
   dateError: PropTypes.string,
-  size: PropTypes.number,
+  size: PropTypes.string,
 };
 
 export default NewTournamentForm;

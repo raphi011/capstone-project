@@ -1,9 +1,13 @@
 import { PropTypes } from 'react';
 
+export const player = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+});
 
 export const team = PropTypes.shape({
-  player1: PropTypes.string.isRequired,
-  player2: PropTypes.string.isRequired,
+  player1: player,
+  player2: player,
   points: PropTypes.number,
   rank: PropTypes.number,
 });
@@ -23,10 +27,10 @@ export const tournament = PropTypes.shape({
   league: PropTypes.string,
   date: PropTypes.string,
   type: PropTypes.string,
-  club: PropTypes.string,
   registrations: PropTypes.number,
   size: PropTypes.size,
   teams: PropTypes.arrayOf(team),
   description: PropTypes.string,
   location,
+  club,
 });

@@ -64,7 +64,7 @@ class Tournament extends Component {
           <Box direction="row" justify="between" >
             <span>
               <Heading>{tournament.league}-Cup {tournament.name ? `'${tournament.name}'` : ''}</Heading>
-              Location: <Link to={`/clubs/${tournament.club}`}>{tournament.club}</Link><br />
+              Location: <Link to={`/clubs/${tournament.club.normalizedName}`}>{tournament.club.name}</Link><br />
               {teamsCount} / {tournament.size} teams have joined
           </span>
             <span style={{ textAlign: 'right' }}>

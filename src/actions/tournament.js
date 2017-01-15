@@ -1,4 +1,4 @@
-let currentId = 0;
+let currentId = 7;
 
 export const createTournament = tournament => {
   const id = currentId++;
